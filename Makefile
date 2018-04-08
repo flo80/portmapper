@@ -7,7 +7,7 @@ GOGET=$(GOCMD) get
 
 # Binary path and names
 BINARY_PATH=bin
-BINARY_NAME=portmapping
+BINARY_NAME=portmapper
 
 # Build flags
 BUILD_VERSION=`git rev-parse --short HEAD`
@@ -20,8 +20,8 @@ all: deps build build_for_docker
 build:
 	$(GOBUILD) $(LDFLAGS) -o $(BINARY_PATH)/$(BINARY_NAME) .
 
-build_for_docker:
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GOBUILD) $(LDFLAGS) -o $(BINARY_PATH)/$(BINARY_NAME)_docker .
+build_linux:
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GOBUILD) $(LDFLAGS) -o $(BINARY_PATH)/$(BINARY_NAME)_linux .
 
 deps:
 	$(GOGET) "github.com/jackpal/gateway"
