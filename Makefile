@@ -31,4 +31,4 @@ deps:
 clean:
 	$(GOCLEAN)
 	rm -f $(BINARY_PATH)/$(BINARY_NAME)
-	rm -f $(BINARY_PATH)/$(BINARY_NAME)_docker
+	rm -f $(BINARY_PATH)/$(BINARY_NAME)_linux
