@@ -13,7 +13,7 @@ import (
 	"github.com/flo80/portmapping/cmd/client/tools"
 )
 
-const defaultGRPCIP = ""
+const defaultGRPCIP = "127.0.0.1"
 const defaultGRPCPort = 7777
 
 func main() {
@@ -21,7 +21,8 @@ func main() {
 	addressServer := flag.String("server", fmt.Sprintf("%v:%v", defaultGRPCIP, defaultGRPCPort), "Set GRPC server ip:port")
 	flag.Parse()
 
-	fct, internalPort, externalPort, protocol, lifetime := tools.ParseArgs(os.Args)
+	fct, internalPort, externalPort, protocol, lifetime := tools.ParseArgs(flag.Args())
+	fmt.Printf("Using GRPC server %v \n", *addressServer)
 
 	conn, err := grpc.Dial(*addressServer, grpc.WithInsecure())
 	if err != nil {

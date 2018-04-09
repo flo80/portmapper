@@ -45,35 +45,35 @@ Exit Codes:
 
 func ParseArgs(args []string) (fct string, internalPort, externalPort int, protocol string, lifetime int) {
 	log.Printf("len: %v", len(args))
-	if len(args) < 4 || len(args) > 6 {
+	if len(args) < 3 || len(args) > 5 {
 		Usage()
 	}
 
-	fct = strings.ToLower(args[1])
-	internalPort, err := strconv.Atoi(args[2])
+	fct = strings.ToLower(args[0])
+	internalPort, err := strconv.Atoi(args[1])
 	if err != nil || internalPort < 0 || internalPort > 65535 {
 		Usage()
 	}
 
-	externalPort, err = strconv.Atoi(args[3])
+	externalPort, err = strconv.Atoi(args[2])
 	if err != nil || externalPort < 0 || externalPort > 65535 {
 		Usage()
 	}
 
 	protocol = defaultProtocol
 	lifetime = defaultLifetime
-	if len(args) > 4 {
-		if args[4] == "tcp" || args[4] == "udp" {
-			protocol = args[4]
+	if len(args) > 3 {
+		if args[3] == "tcp" || args[3] == "udp" {
+			protocol = args[3]
 		} else {
-			lifetime, err = strconv.Atoi(args[4])
+			lifetime, err = strconv.Atoi(args[3])
 			if err != nil || lifetime < 0 {
 				Usage()
 			}
 		}
 	}
-	if len(args) == 6 {
-		lifetime, err = strconv.Atoi(args[5])
+	if len(args) == 5 {
+		lifetime, err = strconv.Atoi(args[4])
 		if err != nil || lifetime < 0 {
 			Usage()
 		}
