@@ -18,3 +18,5 @@ redirects.json
 # Executables
 bin/
 testdata/
+
+.DS_Store
