@@ -1,0 +1,55 @@
+syntax = "proto3";
+package api;
+
+import "google/api/annotations.proto";
+
+enum Protocol {
+    tcp = 0;
+    udp = 1;
+}
+
+enum Technology {
+    all = 0;     // Try all available mapping technologies
+    natpmp = 1;  // Only use NAT/PMP
+    upnp = 2;    // Only use UPNP
+}
+
+message OpenPortRequest {
+    int32 localPort = 1;         // Port on requesting server
+    int32 externalPort = 2;      // External port on router
+    Protocol protocol = 3;     // Protocol to forward
+    int32 lifetime = 4;          // Requested lifetime of mapping
+    Technology technology = 5; // Technology to be used
+}
+
+message ClosePortRequest {
+    int32 localPort = 1;         // Port on requesting server
+    int32 externalPort = 2;      // External port on router
+    Technology technology = 5; // Technology to be used (should be same as for open)
+}
+
+enum Success {
+    ok = 0;     // Request succesful
+    notOk = 1;  // Request not succesful
+}
+
+message StatusResponse {
+    Success success = 1;       // Success of operation
+    string message = 2;        // Additional message (e.g. error)
+    Technology technology = 5; // Technology used for Operation 
+}
+
+service NATservice {
+    rpc OpenPort (OpenPortRequest) returns (StatusResponse){
+      option (google.api.http) = {
+          post: "/open"
+          body: "*"
+      };
+    };   // Open a port on NAT router
+    rpc ClosePort (ClosePortRequest) returns (StatusResponse){
+      option (google.api.http) = {
+          post: "/close"
+          body: "*"
+      };
+    }; // Close port on NAT router
+}
