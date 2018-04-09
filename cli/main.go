@@ -26,7 +26,7 @@ Commands:
 - openPMP & closePMP for only using NAT PMP
 - openUPNP & closeUPNP for only using UPNP
 
-Arguments:mkdir 
+Arguments: 
 - Internal and external port in the range of 0-65535
 - Protocol can be tcp or udp (default %v)
 - Lifetime in secondes of port mapping 
@@ -43,7 +43,7 @@ Exit Codes:
 
 func main() {
 	log.Printf("len: %v", len(os.Args))
-	if len(os.Args) < 4 || len(os.Args) > 5 {
+	if len(os.Args) < 4 || len(os.Args) > 6 {
 		usage()
 	}
 
