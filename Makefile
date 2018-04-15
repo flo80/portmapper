@@ -23,17 +23,17 @@ BUILD_VERSION=`git rev-parse --short HEAD`
 LDFLAGS=-ldflags "-X main.Build=$(BUILD_VERSION) -s -w"
 LINUX=CGO_ENABLED=0 GOOS=linux GOARCH=amd64
 
-.PHONY: deps clean proto
+.PHONY: deps clean 
 
 all: deps build 
 
-build: proto
+build: api/portmap.pb.go
 	$(GOBUILD) $(LDFLAGS) -o $(BINARY_PATH)/$(BINARY_NAME_CLI) ./$(SOURCE_CLI)
 	$(GOBUILD) $(LDFLAGS) -o $(BINARY_PATH)/$(BINARY_NAME_SERVER) ./$(SOURCE_SERVER)
 	$(GOBUILD) $(LDFLAGS) -o $(BINARY_PATH)/$(BINARY_NAME_CLIENT) ./$(SOURCE_CLIENT)
 
 
-build_linux: proto
+build_linux: api/portmap.pb.go
 	$(LINUX) $(GOBUILD) $(LDFLAGS) -o $(BINARY_PATH)/$(BINARY_NAME_CLI)_linux ./$(SOURCE_CLI)
 	$(LINUX) $(GOBUILD) $(LDFLAGS) -o $(BINARY_PATH)/$(BINARY_NAME_SERVER)_linux ./$(SOURCE_SERVER)
 	$(LINUX) $(GOBUILD) $(LDFLAGS) -o $(BINARY_PATH)/$(BINARY_NAME_CLIENT)_linux ./$(SOURCE_CLIENT)
@@ -56,6 +56,6 @@ clean:
 	rm -f $(BINARY_PATH)/$(BINARY_NAME_SERVER)
 	rm -f $(BINARY_PATH)/$(BINARY_NAME_SERVER)_linux
 
-proto:
+api/portmap.pb.go:
 	$(PROTOC) -I api -I ${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
 		--go_out=plugins=grpc:api api/portmap.proto

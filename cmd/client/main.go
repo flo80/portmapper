@@ -9,8 +9,8 @@ import (
 	context "golang.org/x/net/context"
 	"google.golang.org/grpc"
 
-	"github.com/flo80/portmapping/api"
-	"github.com/flo80/portmapping/cmd/client/tools"
+	"github.com/flo80/portmapper/api"
+	"github.com/flo80/portmapper/cmd/client/tools"
 )
 
 const defaultGRPCIP = "127.0.0.1"
